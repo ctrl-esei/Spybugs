@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spybugs POS | Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Existing global styles -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Font Awesome Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
+  <!-- Chart.js (for Analytics tab) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="auth-body">
+  <!-- =======================================
+       LOGIN SCREEN
+       ======================================= -->
+  <div id="login-screen" class="auth-wrapper">
+    <div class="auth-card">
+      <!-- Back to Home -->
+      <div style="margin-bottom: 0.75rem;">
+        <a href="index.html" style="font-size: 0.8rem; color: #6b7280;">
+          <i class="fa-solid fa-arrow-left"></i> Back to Home
+        </a>
+      </div>
+
+      <!-- Logo / Bug Icon -->
+      <div class="brand" style="justify-content: center; margin-bottom: 1rem;">
+        <div class="brand-logo">
+          <i class="fa-solid fa-bug"></i>
+        </div>
+      </div>
+
+      <h2 class="auth-title">Admin Login</h2>
+      <p class="auth-subtitle">Access the POS system</p>
+
+      <form id="loginForm" class="auth-form">
+        <!-- Username -->
+        <div>
+          <label class="input-label">
+            <i class="fa-solid fa-user"></i> Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            class="input"
+            placeholder="Enter username"
+            autocomplete="username"
+          />
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="input-label">
+            <i class="fa-solid fa-lock"></i> Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            class="input"
+            placeholder="Enter password"
+            autocomplete="current-password"
+          />
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          <i class="fa-solid fa-right-to-bracket"></i> Login
+        </button>
+
+        <!-- Forgot Password (not button) -->
+        <div class="auth-footer-links" style="justify-content: center;">
+          <span class="auth-link" id="forgotPasswordLink">
+            Forgot password?
+          </span>
+        </div>
+
+        <!-- Demo credentials -->
+        <p
+          style="
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 0.4rem;
+            color: #6b7280;
+          "
+        >
+          Demo: <strong>admin</strong> / <strong>admin123</strong>
+        </p>
+
+        <!-- Error message -->
+        <p
+          id="loginError"
+          style="
+            display: none;
+            color: #ef4444;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 0.4rem;
+          "
+        >
+          Invalid username or password.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================
+       DASHBOARD
+       ======================================= -->
+  <div id="dashboard" class="dashboard" style="display: none;">
+    <div class="container">
+      <!-- Header -->
+      <header
+        class="navbar-inner"
+        style="
+          margin-bottom: 1.5rem;
+          background: #ffffff;
+          border-radius: 1rem;
+          border: 1px solid rgba(236, 72, 153, 0.35);
+          box-shadow: 0 8px 20px rgba(148, 163, 184, 0.16);
+        "
+      >
+        <div class="brand">
+          <div class="brand-logo">
+            <i class="fa-solid fa-bug"></i>
+          </div>
+          <div>
+            <div class="brand-text-main">Spybugs POS</div>
+            <div class="brand-text-sub">Point of Sale System</div>
+          </div>
+        </div>
+
+        <button id="logoutBtn" class="btn btn-light">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+      </header>
+
+      <!-- Tabs -->
+      <nav class="tab-nav" id="posTabNav">
+        <button
+          class="tab-button tab-button--active"
+          data-tab="tab-create-order"
+        >
+          <i class="fa-solid fa-cart-plus"></i> Create Order
+        </button>
+        <button class="tab-button" data-tab="tab-orders">
+          <i class="fa-solid fa-clipboard-list"></i> Orders
+        </button>
+        <button class="tab-button" data-tab="tab-analytics">
+          <i class="fa-solid fa-chart-column"></i> Dashboard
+        </button>
+        <button class="tab-button" data-tab="tab-inventory">
+          <i class="fa-solid fa-boxes-stacked"></i> Inventory
+        </button>
+        <button class="tab-button" data-tab="tab-reports">
+          <i class="fa-solid fa-clipboard-check"></i> Reports
+        </button>
+      </nav>
+
+      <!-- ===============================
+           TAB 1: CREATE ORDER
+           =============================== -->
+      <section id="tab-create-order" class="tab-panel tab-panel--active">
+        <div
+          class="section-header"
+          style="text-align: left; margin-bottom: 1.5rem"
+        >
+          <h2 class="section-title">Create Order</h2>
+          <p class="section-subtitle">
+            Build a new order, add items, and generate an order ID.
+          </p>
+        </div>
+
+        <div class="order-creator">
+          <!-- LEFT: Order Form -->
+          <div class="card order-card">
+            <div style="margin-bottom: 1rem">
+              <label class="input-label">Customer Name</label>
+              <input
+                type="text"
+                id="customerNameInput"
+                class="input"
+                placeholder="Enter customer name"
+              />
+            </div>
+
+            <div class="story-text-box" style="margin-top: 0.5rem">
+              <h4 class="h3" style="margin-bottom: 0.75rem">
+                <i class="fa-solid fa-plus-circle"></i> Add Items
+              </h4>
+            
+              <div class="grid" style="gap: 0.75rem">
+                <div>
+                  <label class="input-label">Category</label>
+                  <select id="categorySelect" class="select">
+                    <option value="">Select category</option>
+                    <option value="Print Papers">Print Papers</option>
+                    <option value="Picture Packages">Picture Packages</option>
+                    <option value="Online Assistance">Online Assistance</option>
+                    <option value="Other Services">Other Services</option>
+                  </select>
+                </div>
+              
+                <div>
+                  <label class="input-label">Item</label>
+                  <select id="itemSelect" class="select">
+                    <option value="">Select item</option>
+                  </select>
+                </div>
+              
+                <!-- NEW: Paper Type (for Picture Packages) -->
+                <div id="paperTypeWrapper" style="display:none;">
+                  <label class="input-label">Paper Type</label>
+                  <select id="paperTypeSelect" class="select">
+                    <option value="">Select paper</option>
+                    <!-- You can adjust these to match your inventory names -->
+                    <option value="3R Photo Paper">3R Photo Paper</option>
+                    <option value="4R Photo Paper">4R Photo Paper</option>
+                    <option value="5R Photo Paper">5R Photo Paper</option>
+                  </select>
+                </div>
+              
+                <!-- PAGES: for Print Papers AND Picture Packages -->
+                <div id="pagesInputWrapper" style="display:none;">
+                  <label class="input-label">Number of Pages</label>
+                  <input
+                    type="number"
+                    id="pagesInput"
+                    class="input"
+                    min="1"
+                    placeholder="Enter pages per set"
+                  />
+                </div>
+              
+                <div>
+                  <label class="input-label">Quantity</label>
+                  <input
+                    type="number"
+                    id="quantityInput"
+                    class="input"
+                    min="1"
+                    value="1"
+                    placeholder="Number of sets"
+                  />
+                </div>
+              </div>              
+            
+              <div style="margin-top: 0.9rem; text-align: right">
+                <button id="addItemBtn" class="btn btn-primary" disabled>
+                  <i class="fa-solid fa-plus"></i> Add Item
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Order Summary -->
+          <div class="card order-card">
+            <div
+              id="orderSummaryEmpty"
+              style="text-align: center; padding: 2rem 1rem"
+            >
+              <i
+                class="fa-solid fa-cart-shopping"
+                style="font-size: 2rem; color: #ec4899"
+              ></i>
+              <p class="p1" style="margin-top: 0.75rem">No items added yet</p>
+              <p style="font-size: 0.8rem; color: #6b7280">
+                Add items from the left panel to build the order.
+              </p>
+            </div>
+
+            <div id="orderItemsWrapper" style="display: none">
+              <h4 class="h3" style="margin-bottom: 0.75rem">Order Items</h4>
+              <div id="orderItemsList" class="order-list"></div>
+
+              <div
+                style="
+                  margin-top: 1rem;
+                  border-top: 1px solid rgba(148, 163, 184, 0.35);
+                  padding-top: 0.75rem;
+                "
+              >
+                <div
+                  style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    margin-bottom:0.25rem;
+                  "
+                >
+                  <span style="font-weight:600;">Subtotal:</span>
+                  <span
+                    id="orderSubtotalAmount"
+                    style="
+                      font-size:1rem;
+                      font-weight:600;
+                      color:#4b5563;
+                    "
+                  >
+                    ₱0
+                  </span>
+                </div>
+
+                <div
+                  style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                    gap:0.5rem;
+                    margin-bottom:0.25rem;
+                  "
+                >
+                  <label
+                    for="orderDiscountInput"
+                    style="font-size:0.85rem; color:#6b7280;"
+                  >
+                    Discount (₱):
+                  </label>
+                  <input
+                    type="number"
+                    id="orderDiscountInput"
+                    class="input"
+                    min="0"
+                    value="0"
+                    style="max-width:130px; text-align:right;"
+                  />
+                </div>
+
+                <div
+                  style="
+                    display:flex;
+                    justify-content:space-between;
+                    align-items:center;
+                  "
+                >
+                  <span style="font-weight: 600">Total:</span>
+                  <span
+                    id="orderTotalAmount"
+                    style="
+                      font-size: 1.4rem;
+                      font-weight: 700;
+                      color: #ec4899;
+                    "
+                  >
+                    ₱0
+                  </span>
+                </div>
+              </div>
+
+              <div style="margin-top: 1rem; text-align: right">
+                <button id="createOrderBtn" class="btn btn-primary">
+                  <i class="fa-solid fa-cart-arrow-down"></i> Create Order
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================
+           TAB 2: ORDERS
+           =============================== -->
+      <section id="tab-orders" class="tab-panel">
+        <div
+          class="section-header"
+          style="text-align: left; margin-bottom: 1rem"
+        >
+          <h2 class="section-title">Orders</h2>
+          <p class="section-subtitle">
+            Manage order statuses, payments, and view order details.
+          </p>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0.75rem;
+          "
+        >
+        <select id="orderFilter" class="select" style="max-width: 260px">
+          <option value="all">All Orders</option>
+          <option value="pending">Pending</option>
+          <option value="in-queue">In Queue</option>
+          <option value="printing">Printing</option>
+          <option value="ready">Ready</option>
+          <option value="released">Released</option>
+          <option value="cancelled">Cancelled</option>
+        </select>        
+        </div>
+
+        <div id="ordersList" class="order-list"></div>
+      </section>
+
+      <!-- ===============================
+           TAB 3: ANALYTICS
+           =============================== -->
+      <section id="tab-analytics" class="tab-panel">
+        <div
+          class="section-header"
+          style="text-align: left; margin-bottom: 1rem"
+        >
+          <h2 class="section-title">Analytics</h2>
+          <p class="section-subtitle">
+            Real-time overview of revenue, orders, and performance.
+          </p>
+        </div>
+
+        <!-- Date Range Filter -->
+        <div
+          class="card"
+          style="
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: flex-end;
+          "
+        >
+          <div>
+            <label class="input-label">Range</label>
+            <select id="analyticsRange" class="select">
+              <option value="all">All time</option>
+              <option value="today">Today</option>
+              <option value="week">This week</option>
+              <option value="month">This month</option>
+              <option value="year">This year</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+
+          <div
+            id="analyticsCustomDates"
+            style="display:none; gap:0.5rem; align-items:flex-end;"
+            class="grid-2"
+          >
+            <div>
+              <label class="input-label">From</label>
+              <input type="date" id="analyticsFrom" class="input" />
+            </div>
+            <div>
+              <label class="input-label">To</label>
+              <input type="date" id="analyticsTo" class="input" />
+            </div>
+          </div>
+
+          <button
+            id="analyticsApplyBtn"
+            class="btn btn-primary"
+            type="button"
+            style="margin-left:auto; margin-top:1.5rem;"
+          >
+            <i class="fa-solid fa-filter"></i> Apply
+          </button>
+
+          <div
+            id="analyticsActiveLabel"
+            style="
+              font-size:0.8rem;
+              color:#6b7280;
+              margin-left:0.75rem;
+              margin-top:1.5rem;
+            "
+          >
+            Showing: All time
+          </div>
+        </div>
+
+        <!-- Top Stats -->
+        <div class="report-summary-grid" style="margin-bottom: 1.5rem">
+          <div class="card card-stat">
+            <div class="card-stat-label">Total Revenue (Paid)</div>
+            <div id="statTotalRevenue" class="card-stat-value">₱0</div>
+          </div>
+          <div class="card card-stat">
+            <div class="card-stat-label">Total Orders</div>
+            <div id="statTotalOrders" class="card-stat-value">0</div>
+          </div>
+          <div class="card card-stat">
+            <div class="card-stat-label">Pending Payments</div>
+            <div id="statPendingPayments" class="card-stat-value">₱0</div>
+          </div>
+          <div class="card card-stat">
+            <div class="card-stat-label">Customers</div>
+            <div id="statCustomers" class="card-stat-value">0</div>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="analytics-charts">
+          <div class="card">
+            <h4 class="h3" style="margin-bottom: 0.75rem">
+              Revenue by Category
+            </h4>
+            <canvas id="revenueByCategoryChart"></canvas>
+          </div>
+          <div class="card">
+            <h4 class="h3" style="margin-bottom: 0.75rem">
+              Order Status Distribution
+            </h4>
+            <canvas id="orderStatusChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===============================
+           TAB 4: INVENTORY
+           =============================== -->
+      <section id="tab-inventory" class="tab-panel">
+        <div
+          class="section-header"
+          style="text-align: left; margin-bottom: 1rem"
+        >
+          <h2 class="section-title">Inventory</h2>
+          <p class="section-subtitle">
+            Monitor stocks, track low inventory, and adjust quantities quickly.
+          </p>
+        </div>
+
+        <!-- Add Product Button -->
+        <div
+          style="
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 0.75rem;
+          "
+        >
+          <button id="btnAddProduct" class="btn btn-primary" type="button">
+            <i class="fa-solid fa-plus"></i> Add Product
+          </button>
+        </div>
+
+        <!-- Add/Edit Product Form -->
+        <div
+          id="inventoryFormCard"
+          class="card"
+          style="display: none; margin-bottom: 1rem;"
+        >
+          <h4
+            class="h3"
+            id="inventoryFormTitle"
+            style="margin-bottom: 0.75rem;"
+          >
+            Add Product
+          </h4>
+
+          <div class="grid-3" style="gap: 0.75rem;">
+            <div>
+              <label class="input-label">Name</label>
+              <input
+                type="text"
+                id="invNameInput"
+                class="input"
+                placeholder="Product name"
+              />
+            </div>
+            <div>
+              <label class="input-label">Category</label>
+              <input
+                type="text"
+                id="invCategoryInput"
+                class="input"
+                placeholder="Category"
+              />
+            </div>
+            <div>
+              <label class="input-label">Quantity</label>
+              <input
+                type="number"
+                id="invQtyInput"
+                class="input"
+                min="0"
+                value="0"
+              />
+            </div>
+          </div>
+
+          <div class="grid-3" style="gap: 0.75rem; margin-top: 0.75rem;">
+            <div>
+              <label class="input-label">Unit Price (₱)</label>
+              <input
+                type="number"
+                id="invUnitPriceInput"
+                class="input"
+                step="0.01"
+                min="0"
+                value="0"
+              />
+            </div>
+            <div>
+              <label class="input-label">Reorder Level</label>
+              <input
+                type="number"
+                id="invReorderInput"
+                class="input"
+                min="0"
+                value="0"
+              />
+            </div>
+          </div>
+
+          <input type="hidden" id="invIdInput" />
+
+          <div style="margin-top: 1rem; text-align: right;">
+            <button
+              id="invCancelBtn"
+              class="btn btn-light"
+              type="button"
+              style="margin-right: 0.5rem;"
+            >
+              Cancel
+            </button>
+            <button id="invSaveBtn" class="btn btn-primary" type="button">
+              <i class="fa-solid fa-floppy-disk"></i> Save
+            </button>
+          </div>
+        </div>
+
+        <!-- Low Stock Alert -->
+        <div
+          id="lowStockCard"
+          class="card"
+          style="
+            background: rgba(251, 191, 36, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            margin-bottom: 1.5rem;
+          "
+        >
+          <div style="display: flex; align-items: flex-start; gap: 0.75rem">
+            <i
+              class="fa-solid fa-triangle-exclamation"
+              style="font-size: 1.4rem; color: #f59e0b; margin-top: 0.1rem"
+            ></i>
+            <div>
+              <div style="font-weight: 600">Low Stock Alert</div>
+              <p
+                id="lowStockSubtitle"
+                style="font-size: 0.85rem; margin: 0.25rem 0"
+              >
+                Checking inventory levels...
+              </p>
+              <div
+                id="lowStockList"
+                style="
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 0.35rem;
+                  margin-top: 0.4rem;
+                "
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inventory Container -->
+        <div id="inventoryContainer"></div>
+
+        <p
+          style="
+            font-size: 0.8rem;
+            margin-top: 1.5rem;
+            color: #6b7280;
+          "
+        >
+          Note: This is a demo inventory system. In production, this would be
+          connected to a database.
+        </p>
+      </section>
+
+      <!-- ===============================
+           TAB 5: REPORTS
+           =============================== -->
+      <section id="tab-reports" class="tab-panel">
+        <div
+          class="section-header"
+          style="text-align: left; margin-bottom: 1rem"
+        >
+          <h2 class="section-title">Reports</h2>
+          <p class="section-subtitle">
+            Summaries of orders and revenues for different time ranges.
+          </p>
+        </div>
+
+        <!-- Today / Week / Month -->
+        <div class="report-summary-grid" style="margin-bottom: 1.5rem">
+          <div class="card card-stat">
+            <div class="card-stat-label">Today's Orders</div>
+            <div id="repTodayOrders" class="card-stat-value">0</div>
+            <div style="font-size: 0.8rem; color: #6b7280">
+              Revenue: <span id="repTodayRevenue">₱0</span>
+            </div>
+          </div>
+          <div class="card card-stat">
+            <div class="card-stat-label">This Week</div>
+            <div id="repWeekOrders" class="card-stat-value">0</div>
+            <div style="font-size: 0.8rem; color: #6b7280">
+              Revenue: <span id="repWeekRevenue">₱0</span>
+            </div>
+          </div>
+          <div class="card card-stat">
+            <div class="card-stat-label">This Month</div>
+            <div id="repMonthOrders" class="card-stat-value">0</div>
+            <div style="font-size: 0.8rem; color: #6b7280">
+              Revenue: <span id="repMonthRevenue">₱0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Financial Summary -->
+        <div class="card" style="margin-bottom: 1.5rem">
+          <h4 class="h3" style="margin-bottom: 0.75rem">Financial Summary</h4>
+          <div class="grid-2">
+            <div>
+              <div
+                style="
+                  margin-bottom: 0.5rem;
+                  padding: 0.75rem;
+                  border-radius: 0.75rem;
+                  background: rgba(16, 185, 129, 0.08);
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                  "
+                >
+                  Total Revenue (Paid)
+                </div>
+                <div
+                  id="repTotalPaid"
+                  style="font-size: 1.3rem; font-weight: 700; color: #10b981"
+                >
+                  ₱0
+                </div>
+              </div>
+              <div
+                style="
+                  padding: 0.75rem;
+                  border-radius: 0.75rem;
+                  background: rgba(245, 158, 11, 0.08);
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                  "
+                >
+                  Pending Payments
+                </div>
+                <div
+                  id="repPendingAmount"
+                  style="font-size: 1.3rem; font-weight: 700; color: #f59e0b"
+                >
+                  ₱0
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                style="
+                  margin-top: 0.50rem;
+                  padding: 0.75rem;
+                  border-radius: 0.75rem;
+                  background: rgba(236, 72, 153, 0.08);
+                  height: 100%;
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.8rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.06em;
+                  "
+                >
+                  Total Expected Revenue
+                </div>
+                <div
+                  id="repTotalExpected"
+                  style="font-size: 1.3rem; font-weight: 700; color: #ec4899"
+                >
+                  ₱0
+                </div>
+                <p
+                  id="repPaidPendingText"
+                  style="
+                    font-size: 0.8rem;
+                    margin-top: 0.5rem;
+                    color: #6b7280;
+                  "
+                >
+                  0 paid orders, 0 pending.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Services -->
+        <div class="card" style="margin-bottom: 1.5rem">
+          <h4 class="h3" style="margin-bottom: 0.75rem">
+            Top Services - Most ordered
+          </h4>
+          <div id="topServicesList"></div>
+        </div>
+
+        <!-- Generate Reports Buttons -->
+        <div class="grid-3" style="margin-bottom: 1rem">
+          <button id="btnDailyReport" class="btn btn-primary">
+            <i class="fa-solid fa-calendar-day"></i> Daily Report
+          </button>
+          <button id="btnWeeklyReport" class="btn btn-primary">
+            <i class="fa-solid fa-calendar-week"></i> Weekly Report
+          </button>
+          <button id="btnMonthlyReport" class="btn btn-primary">
+            <i class="fa-solid fa-calendar-days"></i> Monthly Report
+          </button>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <div
+    id="toastContainer"
+    style="
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      z-index: 9999;
+    "
+  ></div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

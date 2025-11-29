@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spybugs | Order & Menu</title>
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+  <!-- ===========================
+       NAVBAR (Same as index.html)
+       =========================== -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="brand">
+        <div class="brand-logo">
+          <img src="Assets/img/Logo_Spy.png" alt="Spybugs Logo" style="width: 100%; height: 100%; border-radius: 1.2rem; object-fit: cover;">
+        </div>
+        <div>
+          <div class="brand-text-main">Spybugs Printing Shop</div>
+          <div class="brand-text-sub">Printing Smarter, Growing Stronger</div>
+        </div>
+      </a>      
+
+      <nav class="nav-actions">
+        <a class="btn btn-outline" href="index.html">Home</a>
+        <a class="btn btn-primary" href="#how-to-order">Order Now</a>
+        <a class="btn btn-light" href="admin.html">Admin Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===========================
+       ORDER PAGE
+       =========================== -->
+  <main class="section">
+    <div class="container">
+
+      <!-- ORDER TRACKING -->
+      <section class="card order-card">
+        <h2 class="section-title" style="margin-bottom: 1rem;">Track Your Order</h2>
+
+        <div class="grid-2">
+          <div>
+            <label class="input-label">Reference Number</label>
+            <input type="text" class="input" style="margin-bottom: 1rem" id="trackRef" placeholder="Enter your reference number">
+          </div>
+
+          <div style="display: flex; align-items: flex-end;">
+            <button class="btn btn-primary1" style="width: 100%;" onclick="trackOrder()">
+              <i class="fa-solid fa-magnifying-glass"></i> Track
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ORDER TRACKING RESULT + RECEIPT -->
+      <section
+      id="orderTrackingResult"
+      class="card order-card"
+      style="display:none; margin-top: 1.5rem;"
+      >
+      <!-- Timeline -->
+      <div id="orderTimeline" class="order-timeline"></div>
+      <p id="orderStatusMessage" class="order-status-message"></p>
+
+      <!-- Receipt / Payment summary -->
+      <div id="orderReceiptWrapper" style="margin-top:1.5rem;">
+        <div id="receiptPrintArea" class="receipt-card">
+          <!-- Filled dynamically by script.js -->
+        </div>
+
+        <div style="margin-top:1rem; text-align:right;">
+          <button id="printReceiptBtn" class="btn btn-primary">
+            <i class="fa-solid fa-print"></i> Print Receipt
+          </button>
+        </div>
+      </div>
+      </section>
+
+      <!-- HOW TO ORDER -->
+      <section class="section" id="how-to-order">
+        <h2 class="section-title">How to Order</h2>
+
+        <div class="grid-2 how-order-grid">
+          <!-- Messenger -->
+          <article class="card">
+            <h3 class="card-title"><i class="fa-brands fa-facebook-messenger"></i> Order via Messenger</h3>
+            <p>Fast and convenient ordering through Facebook Messenger.</p>
+            <a href="https://www.facebook.com/jeremi.torrano" 
+                target="_blank" 
+                class="btn btn-messenger">
+            <i class="fa-brands fa-facebook-messenger"></i> Message Us
+            </a>
+          </article>
+
+          <!-- Email -->
+          <article class="card">
+            <h3 class="card-title"><i class="fa-solid fa-envelope"></i> Order via Email</h3>
+            <p>You can send us your files and instructions via email.</p>
+          
+            <a href="mailto:jeremitorrano@yahoo.com" class="btn btn-email">
+              <i class="fa-solid fa-envelope"></i> jeremitorrano@yahoo.com
+            </a>
+          
+            <a href="mailto:torranojeremi@gmail.com" class="btn btn-email" style="margin-top: 0.5rem;">
+              <i class="fa-solid fa-envelope"></i> torranojeremi@gmail.com
+            </a>
+          </article>          
+        </div>
+      </section>
+
+      <!-- ===========================
+           MENU SECTIONS
+           =========================== -->
+
+      <!-- PRINT PAPERS -->
+      <section class="menu-group">
+        <h2 class="section-title">Print Papers</h2>
+
+        <div class="card order-card">
+          <h3 class="menu-group-title">Regular Sizes</h3>
+
+          <div class="menu-item-row"><span class="menu-item-name">A4 / Short / Long – Students</span><span class="menu-item-price">₱3</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">A4 / Short / Long – B&W</span><span class="menu-item-price">₱5</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">A4 / Short / Long – Full Color</span><span class="menu-item-price">₱10</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">A4 / Short / Long – Full Color Students</span><span class="menu-item-price">₱8</span></div>
+
+          <hr style="margin: 1rem 0;">
+
+          <h3 class="menu-group-title">A3 Printing</h3>
+
+          <div class="menu-item-row"><span class="menu-item-name">A3 – B&W</span><span class="menu-item-price">₱10</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">A3 – Minimal Color</span><span class="menu-item-price">₱20</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">A3 – Full Color</span><span class="menu-item-price">₱70</span></div>
+
+          <hr style="margin: 1rem 0;">
+
+          <h3 class="menu-group-title">Specialty Papers</h3>
+
+          <div class="menu-item-row"><span class="menu-item-name">Board Paper</span><span class="menu-item-price">₱25</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Board (Double-Sided)</span><span class="menu-item-price">₱35</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Glossy</span><span class="menu-item-price">₱40</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Glossy (Double-Sided)</span><span class="menu-item-price">₱50</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Sticker Paper</span><span class="menu-item-price">₱35</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Transparent Sticker</span><span class="menu-item-price">₱35</span></div>
+
+        </div>
+      </section>
+
+      <!-- PICTURE PACKAGES -->
+      <section class="menu-group">
+        <h2 class="section-title">Picture Packages</h2>
+
+        <div class="card order-card">
+
+          <div class="menu-item-row"><span class="menu-item-name">Package 1: 3pcs 2x2, 4pcs 1x1</span><span class="menu-item-price">₱55 (₱75 Corporate)</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Package 2: 4pcs 2x2</span><span class="menu-item-price">₱55 (₱75 Corporate)</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Package 3: 4pcs Passport + 3pcs 1x1</span><span class="menu-item-price">₱75</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Package 4: 2pcs 2x2, 2pcs Passport, 3pcs 1x1</span><span class="menu-item-price">₱75</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Package 5: 2pcs 2x2 + 4pcs 1x1</span><span class="menu-item-price">₱50 (₱75 Corporate)</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Package 6: 10pcs 1x1</span><span class="menu-item-price">₱50 (₱75 Corporate)</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Package 7: 8pcs 1x1</span><span class="menu-item-price">₱40 (₱75 Corporate)</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Package 8: 6pcs Passport</span><span class="menu-item-price">₱75</span></div>
+
+          <hr style="margin: 1rem 0;">
+
+          <h3 style="margin-bottom: 0.5rem;">Other Sizes</h3>
+
+          <div class="menu-item-row"><span class="menu-item-name">Wallet Size</span><span class="menu-item-price">₱20</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">3R</span><span class="menu-item-price">₱20</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">4R</span><span class="menu-item-price">₱30</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">5R</span><span class="menu-item-price">₱35</span></div>
+
+        </div>
+      </section>
+
+      <!-- ONLINE ASSISTANCE -->
+      <section class="menu-group">
+        <h2 class="section-title">Online Appointment Assistance</h2>
+
+        <div class="card order-card">
+
+          <div class="menu-item-row"><span class="menu-item-name">Police Clearance</span><span class="menu-item-price">₱150 (₱330 w/ payment)</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">SSS</span><span class="menu-item-price">₱150</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">NBI</span><span class="menu-item-price">₱300</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Pag-ibig</span><span class="menu-item-price">₱350</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">E-Reg / PEOS</span><span class="menu-item-price">₱250</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Passport</span><span class="menu-item-price">₱1500</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">PSA</span><span class="menu-item-price">₱150</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Balik-Manggagawa</span><span class="menu-item-price">₱250</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">OEC</span><span class="menu-item-price">₱250</span></div>
+
+        </div>
+      </section>
+
+      <!-- OTHER SERVICES -->
+      <section class="menu-group">
+        <h2 class="section-title">Other Services</h2>
+
+        <div class="card order-card">
+          <div class="menu-item-row"><span class="menu-item-name">Install MS Office</span><span class="menu-item-price">₱350</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Format</span><span class="menu-item-price">₱800</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">PC Repair</span><span class="menu-item-price">Varies</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Laminate ID</span><span class="menu-item-price">₱25</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Laminate Half</span><span class="menu-item-price">₱50</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Laminate Full</span><span class="menu-item-price">₱80</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">PVC Card</span><span class="menu-item-price">₱100</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Layout</span><span class="menu-item-price">Varies</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Resume</span><span class="menu-item-price">₱50</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Typing (Rush)</span><span class="menu-item-price">₱100/page</span></div>
+          <div class="menu-item-row"><span class="menu-item-name">Typing (Regular)</span><span class="menu-item-price">₱50/page</span></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+<!-- ===========================
+     FOOTER 
+     =========================== -->
+     <footer class="site-footer">
+        <div class="container">
+          <div class="footer-inner">
+      
+            <!-- Left: Info -->
+            <div class="footer-meta">
+              <div class="brand">
+                <div class="brand-logo">
+                  <img src="Assets/img/Logo_Spy.png" alt="Spybugs Logo" class="brand-logo-img" style="width: 100%; height: 100%; border-radius: 1.2rem; object-fit: cover;">
+                </div>
+                <div>
+                  <div class="brand-text-main" style="color: #342535;">Spybugs Printing Shop</div>
+                  <div class="brand-text-sub" style="color: rgb(48, 33, 33);">
+                    Printing Smarter, Growing Stronger
+                  </div>
+                </div>
+              </div>
+      
+              <div style="margin-top: 1rem;">
+                <p><strong>Address:</strong> A. Delas Alas Street, Taal, Batangas</p>
+                <p><strong>Phone:</strong> 0995-512-2521</p>
+      
+                <p><strong>Emails:</strong><br>
+                  jeremitorrano@yahoo.com<br>
+                  torranojeremi@gmail.com
+                </p>
+      
+                <p><strong>Store Hours:</strong><br>
+                  Monday–Friday: 7:00 AM – 5:00 PM<br>
+                  Saturday: 8:00 AM – 3:00 PM<br>
+                  Sunday: 8:00 AM – 5:00 PM
+                </p>
+              </div>
+            </div>
+      
+            <!-- Right: Map -->
+            <div class="footer-map">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3873.3334332209706!2d120.92022997554378!3d13.879000294334947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd0b00bb851057%3A0xa6786ba9ae10610!2sSpybugs!5e0!3m2!1sen!2sph!4v1763447328700!5m2!1sen!2sph"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+      
+          </div>
+      
+          <div class="footer-bottom">
+            <div>© <span id="year"></span> Spybugs Printing Shop. All rights reserved.</div>
+            <div>Made with <i class="fa-solid fa-heart"></i> in Taal, Batangas.</div>
+          </div>
+        </div>
+      </footer>
+      
+      <script src="js/script.js"></script>
+      <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+      </script>     
+</body>
+</html>
